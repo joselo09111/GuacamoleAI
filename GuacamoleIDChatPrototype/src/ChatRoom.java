@@ -1,3 +1,9 @@
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,7 +15,12 @@
  * @author chapi
  */
 public class ChatRoom extends javax.swing.JFrame {
-
+    
+    static ServerSocket ss;
+    static Socket s;
+    static DataInputStream dis;
+    static DataOutputStream dout;
+    
     /**
      * Creates new form ChatRoom
      */
@@ -27,10 +38,35 @@ public class ChatRoom extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        message_typing = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        message_area = new javax.swing.JTextArea();
+        message_send = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/URL Tab.PNG"))); // NOI18N
+
+        message_typing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                message_typingActionPerformed(evt);
+            }
+        });
+
+        message_area.setColumns(20);
+        message_area.setRows(5);
+        jScrollPane1.setViewportView(message_area);
+
+        message_send.setText("Send");
+        message_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                message_sendActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel2.setText("Server");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -39,16 +75,52 @@ public class ChatRoom extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(message_typing, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(message_send, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(0, 398, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(message_typing, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(message_send, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void message_typingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_message_typingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_message_typingActionPerformed
+
+    private void message_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_message_sendActionPerformed
+        
+        // TODO add your handling code here:
+        try {
+            String msg = "";
+            msg = message_typing.getText();
+            dout.writeUTF(msg);
+            message_typing.setText("");
+        } catch (Exception e) {
+            //handle exception
+        }
+    }//GEN-LAST:event_message_sendActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,9 +155,29 @@ public class ChatRoom extends javax.swing.JFrame {
                 new ChatRoom().setVisible(true);
             }
         });
+        try {
+            String msgin = "";
+            ss = new ServerSocket(1201);
+            s = ss.accept();
+            dis = new DataInputStream(s.getInputStream());
+            dout = new DataOutputStream(s.getOutputStream());
+
+            while (!msgin.equals("exit")) {
+                msgin = dis.readUTF();
+                message_area.setText(message_area.getText() + "\n Server: " + msgin);
+            }
+
+        } catch (Exception e) {
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private static javax.swing.JTextArea message_area;
+    private javax.swing.JButton message_send;
+    private javax.swing.JTextField message_typing;
     // End of variables declaration//GEN-END:variables
 }
