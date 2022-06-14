@@ -145,6 +145,7 @@ public class GuacamoleID extends javax.swing.JFrame {
         }else
         {
             new ChatRoom().setVisible(true);
+            new ChatRoom_Client().setVisible(true);//I change this
         }
     }//GEN-LAST:event_logInBtnActionPerformed
 
