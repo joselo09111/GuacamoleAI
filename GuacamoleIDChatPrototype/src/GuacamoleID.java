@@ -1,3 +1,9 @@
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -33,8 +39,8 @@ public class GuacamoleID extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        passwordBtn = new javax.swing.JPasswordField();
-        usernameBtn = new javax.swing.JTextField();
+        passwordTxt = new javax.swing.JPasswordField();
+        usernameTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         createAccountBtn = new javax.swing.JLabel();
 
@@ -56,7 +62,7 @@ public class GuacamoleID extends javax.swing.JFrame {
 
         jLabel4.setText("Password");
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guacamoleidchatprototype/GUI wireframe.jpg"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI wireframe.jpg"))); // NOI18N
 
         createAccountBtn.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         createAccountBtn.setForeground(new java.awt.Color(65, 75, 178));
@@ -75,15 +81,6 @@ public class GuacamoleID extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(185, 185, 185))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(258, 258, 258))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -94,8 +91,8 @@ public class GuacamoleID extends javax.swing.JFrame {
                         .addGap(258, 258, 258))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(usernameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(136, 136, 136))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(logInBtn)
@@ -103,6 +100,15 @@ public class GuacamoleID extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(createAccountBtn)
                         .addGap(222, 222, 222))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(258, 258, 258))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(185, 185, 185))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,11 +121,11 @@ public class GuacamoleID extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(usernameBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(passwordBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logInBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -132,7 +138,14 @@ public class GuacamoleID extends javax.swing.JFrame {
 
     private void logInBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInBtnActionPerformed
         // TODO add your handling code here:
-        new ChatRoom().setVisible(true);
+        int userInfo = loginInfo(usernameTxt.getText(),passwordTxt.getText());
+        if(userInfo == -1)
+        {
+            JOptionPane.showMessageDialog(null,"Invalid username or password.");
+        }else
+        {
+            new ChatRoom().setVisible(true);
+        }
     }//GEN-LAST:event_logInBtnActionPerformed
 
     private void createAccountBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountBtnMouseClicked
@@ -174,6 +187,56 @@ public class GuacamoleID extends javax.swing.JFrame {
             }
         });
     }
+    private String[] fixArrayLogin(String[] arr)
+    {
+        String[] res = new String[]{"","",""};
+        int count = 0;
+        for(int i = 0; i < arr.length; i++)
+        {
+            if(!arr[i].isEmpty())
+            {
+            res[count] += arr[i] + " ";
+            if(count < 2)
+                {
+                count++;
+                }
+            }
+        }
+        for(int i = 0; i < 3; i++)
+        {
+            res[i] = res[i].substring(0, res[i].length()-1);
+        }
+        return res;
+    }
+    private int loginInfo(String username, String password)
+    {
+        try
+        {
+            Scanner sc = new Scanner(new File("login.txt"));
+            sc.nextLine();
+            String arr[] = new String[]{"","",""};
+            int count = -1;
+            while(username.equals("") || password.equals("") || !arr[0].equalsIgnoreCase(username) || !arr[1].equals(password))
+            {
+            arr = sc.nextLine().split(" ");
+            arr = fixArrayLogin(arr);
+            count++;
+            }
+            sc.close();
+            if(!username.equals("") && !password.equals("") && arr[0].equalsIgnoreCase(username) && arr[1].equals(password))
+            {
+                return count;
+            }
+        }catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(null,e.toString());
+        }
+        catch(Exception e)
+        {
+            return -1;
+        }
+        return -1;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel createAccountBtn;
@@ -183,7 +246,7 @@ public class GuacamoleID extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JButton logInBtn;
-    private javax.swing.JPasswordField passwordBtn;
-    private javax.swing.JTextField usernameBtn;
+    private javax.swing.JPasswordField passwordTxt;
+    private javax.swing.JTextField usernameTxt;
     // End of variables declaration//GEN-END:variables
 }
