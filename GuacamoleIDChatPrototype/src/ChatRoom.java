@@ -155,21 +155,23 @@ public class ChatRoom extends javax.swing.JFrame {
                 new ChatRoom().setVisible(true);
             }
         });
+        
         try {
-            String msgin = "";
-            ss = new ServerSocket(1201);
-            s = ss.accept();
-            dis = new DataInputStream(s.getInputStream());
-            dout = new DataOutputStream(s.getOutputStream());
+                    String msgin = "";
+                    ss = new ServerSocket(1201);
+                    s = ss.accept();
+                    dis = new DataInputStream(s.getInputStream());
+                    dout = new DataOutputStream(s.getOutputStream());
 
-            while (!msgin.equals("exit")) {
-                msgin = dis.readUTF();
-                message_area.setText(message_area.getText() + "\n Server: " + msgin);
-            }
+                    while (!msgin.equals("exit")) {
+                        msgin = dis.readUTF();
+                        message_area.setText(message_area.getText() + "\n Server: " + msgin);
+                    }
 
-        } catch (Exception e) {
+                } catch (Exception e) {
 
-        }
+                }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
