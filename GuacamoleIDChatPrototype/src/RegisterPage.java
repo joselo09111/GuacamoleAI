@@ -276,6 +276,9 @@ public class RegisterPage extends javax.swing.JFrame {
         }catch(IOException e)
         {
             JOptionPane.showMessageDialog(null,e.toString());
+        }catch(Exception e)
+        {
+            return -1;
         }
         return -1;
     }
