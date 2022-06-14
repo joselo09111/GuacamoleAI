@@ -39,10 +39,13 @@ public class ChatRoom extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(280, 280, 280)
-                .addComponent(jLabel2))
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -50,7 +53,7 @@ public class ChatRoom extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(52, 52, 52)
                 .addComponent(jLabel2)
-                .addGap(0, 382, Short.MAX_VALUE))
+                .addGap(0, 330, Short.MAX_VALUE))
         );
 
         pack();
